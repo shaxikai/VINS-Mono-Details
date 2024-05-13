@@ -210,18 +210,21 @@ class IntegrationBase
     }
 
     double dt;
+    double sum_dt;
     Eigen::Vector3d acc_0, gyr_0;
     Eigen::Vector3d acc_1, gyr_1;
 
     const Eigen::Vector3d linearized_acc, linearized_gyr;
     Eigen::Vector3d linearized_ba, linearized_bg;
 
-    Eigen::Matrix<double, 15, 15> jacobian, covariance;
-    Eigen::Matrix<double, 15, 15> step_jacobian;
-    Eigen::Matrix<double, 15, 18> step_V;
+    Eigen::Matrix<double, 15, 15> jacobian;                 // 预积分对bais一阶导
+    Eigen::Matrix<double, 15, 15> covariance;               // 预积分误差协方差
+    Eigen::Matrix<double, 15, 15> step_jacobian;            // F
+    Eigen::Matrix<double, 15, 18> step_V;                   // V
+
+    //n_at n_wt n_{at+dt} n_{wt+dt} n_ba n_bw 噪声
     Eigen::Matrix<double, 18, 18> noise;
 
-    double sum_dt;
     //预积分值
     Eigen::Vector3d delta_p;
     Eigen::Quaterniond delta_q;

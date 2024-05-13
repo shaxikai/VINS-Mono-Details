@@ -154,13 +154,13 @@ void Estimator::processImage(const map<int, vector<pair<int, Eigen::Matrix<doubl
     //将图像数据、时间、临时预积分值存到图像帧类中
     ImageFrame imageframe(image, header.stamp.toSec());
     imageframe.pre_integration = tmp_pre_integration;
-    
     all_image_frame.insert(make_pair(header.stamp.toSec(), imageframe));
     
     //更新临时预积分初始值
     tmp_pre_integration = new IntegrationBase{acc_0, gyr_0, Bas[frame_count], Bgs[frame_count]};
 
-    if(ESTIMATE_EXTRINSIC == 2)//如果没有外参则进行标定
+    //如果没有外参则进行标定
+    if(ESTIMATE_EXTRINSIC == 2)
     {
         ROS_INFO("calibrating extrinsic param, rotation movement is needed");
         if (frame_count != 0)
